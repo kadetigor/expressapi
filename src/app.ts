@@ -8,7 +8,7 @@ export const app = express()
 
 app.use(express.json())
 // app.use(cors()) this line allows any front-end to request from our back-end. To specify we would need to give it specific URLs that can request from our back-edn
-app.use(videoRouter)
+app.use(SETTINGS.PATH.VIDEOS, videoRouter)
 
 
 

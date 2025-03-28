@@ -10,6 +10,7 @@ import {
     minAgeRestrictionFieldValidator, publicationDateFieldValidator
 } from "../validation/field-validation";
 import {errorResponse} from "../validation/errorResponse";
+import {SETTINGS} from "../settings";
 
 export const videoRouter = Router()
 
@@ -109,9 +110,9 @@ export const videoController = {
     },
 }
 
-videoRouter.get('/', videoController.getVideos)
-videoRouter.get('/:id', videoController.getVideoById)
-videoRouter.post('/', videoController.createVideo)
-videoRouter.put('/:id', videoController.updateVideoById)
-videoRouter.delete('/:id', videoController.deleteVideoById)
-videoRouter.delete('/all-data', videoController.deleteAllVideos)
+videoRouter.get(SETTINGS.PATH.VIDEOS, videoController.getVideos)
+videoRouter.get(`${SETTINGS.PATH.VIDEOS}/:id`, videoController.getVideoById)
+videoRouter.post(SETTINGS.PATH.VIDEOS, videoController.createVideo)
+videoRouter.put(`${SETTINGS.PATH.VIDEOS}/:id`, videoController.updateVideoById)
+videoRouter.delete(`${SETTINGS.PATH.VIDEOS}/:id`, videoController.deleteVideoById)
+videoRouter.delete(`${SETTINGS.PATH.VIDEOS}/all-data`, videoController.deleteAllVideos)
