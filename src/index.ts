@@ -1,6 +1,10 @@
 import {SETTINGS} from './settings'
 import { app } from "./app";
 
-app.listen(SETTINGS.PORT, () => {
-    console.log(`Example app listening on port ${SETTINGS.PORT}`)
-})
+if (process.env.NODE_ENV !== 'production'){
+    app.listen(SETTINGS.PORT, () => {
+        console.log(`Example app listening on port ${SETTINGS.PORT}`)
+    })
+}
+
+export default app;
