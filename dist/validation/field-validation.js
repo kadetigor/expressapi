@@ -3,52 +3,58 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.publicationDateFieldValidator = exports.minAgeRestrictionFieldValidator = exports.canBeDownloadedFieldValidator = exports.availableResolutionsFieldValidator = exports.authorFieldValidator = exports.titleFieldValidator = void 0;
 const dto_1 = require("../videos/dto");
 const titleFieldValidator = (title, errorsArray) => {
-    if (!title) {
-        errorsArray.push({ field: 'title', message: 'no title' });
+    if (title === null || title === undefined) {
+        errorsArray.push({ message: 'no title', field: 'title' });
+        return;
     }
     if (typeof title !== 'string') {
         errorsArray.push({
-            field: 'title',
-            message: 'not a string'
+            message: 'not a string',
+            field: 'title'
         });
         return;
     }
     if (title && title.trim().length > 40) {
         errorsArray.push({
-            field: 'title',
-            message: 'more than 40 characters'
+            message: 'more than 40 characters',
+            field: 'title'
         });
+        return;
     }
     if (title && title.trim().length < 1) {
         errorsArray.push({
-            field: 'title',
-            message: 'no title'
+            message: 'no title',
+            field: 'title'
         });
+        return;
     }
 };
 exports.titleFieldValidator = titleFieldValidator;
 const authorFieldValidator = (author, errorsArray) => {
-    if (!author) {
-        errorsArray.push({ field: 'author', message: 'no author' });
+    if (author === null || author === undefined) {
+        errorsArray.push({ message: 'no author', field: 'author' });
+        return;
     }
     if (typeof author !== 'string') {
         errorsArray.push({
-            field: 'author',
-            message: 'not a string'
+            message: 'not a string',
+            field: 'author'
         });
         return;
     }
     if (author && author.trim().length > 20) {
         errorsArray.push({
-            field: 'author',
-            message: 'more than 20 characters'
+            message: 'more than 20 characters',
+            field: 'author'
         });
+        return;
     }
     if (author && author.trim().length < 1) {
         errorsArray.push({
-            field: 'author',
-            message: 'no author'
+            message: 'no author',
+            field: 'author'
         });
+        return;
     }
 };
 exports.authorFieldValidator = authorFieldValidator;
@@ -57,8 +63,8 @@ const availableResolutionsFieldValidator = (availableResolutions, errorsArray) =
         availableResolutions.forEach((resolution) => {
             if (!Object.keys(dto_1.ResolutionsEnum).includes(resolution)) {
                 errorsArray.push({
-                    field: 'availableResolutions',
-                    message: 'exist no valid value'
+                    message: 'exist no valid value',
+                    field: 'availableResolutions'
                 });
                 return;
             }
@@ -67,54 +73,59 @@ const availableResolutionsFieldValidator = (availableResolutions, errorsArray) =
 };
 exports.availableResolutionsFieldValidator = availableResolutionsFieldValidator;
 const canBeDownloadedFieldValidator = (canBeDownloaded, errorsArray) => {
-    if (!canBeDownloaded) {
-        errorsArray.push({ field: 'canBeDownloaded', message: 'no info on canBeDownloaded' });
+    if (canBeDownloaded === null || canBeDownloaded === undefined) {
+        errorsArray.push({ message: 'no info on canBeDownloaded', field: 'canBeDownloaded' });
+        return;
     }
     if (typeof canBeDownloaded !== 'boolean') {
         errorsArray.push({
-            field: 'canBeDownloaded',
-            message: 'not a boolean'
+            message: 'not a boolean',
+            field: 'canBeDownloaded'
         });
         return;
     }
 };
 exports.canBeDownloadedFieldValidator = canBeDownloadedFieldValidator;
 const minAgeRestrictionFieldValidator = (minAgeRestriction, errorsArray) => {
-    if (!minAgeRestriction) {
-        errorsArray.push({ field: 'minAgeRestriction', message: 'no minAgeRestriction' });
+    if (minAgeRestriction === null || minAgeRestriction === undefined) {
+        errorsArray.push({ message: 'no minAgeRestriction', field: 'minAgeRestriction' });
+        return;
     }
     if (minAgeRestriction === null) {
         return;
     }
     if (typeof minAgeRestriction !== 'number') {
         errorsArray.push({
-            field: 'minAgeRestriction',
-            message: 'not a number'
+            message: 'not a number',
+            field: 'minAgeRestriction'
         });
         return;
     }
     if (minAgeRestriction && minAgeRestriction > 18) {
         errorsArray.push({
-            field: 'minAgeRestriction',
-            message: 'max age is 18, enter number from 1 to 18'
+            message: 'max age is 18, enter number from 1 to 18',
+            field: 'minAgeRestriction'
         });
+        return;
     }
     if (minAgeRestriction && minAgeRestriction < 1) {
         errorsArray.push({
-            field: 'minAgeRestriction',
-            message: 'enter a valid number from 1 to 18'
+            message: 'enter a valid number from 1 to 18',
+            field: 'minAgeRestriction'
         });
+        return;
     }
 };
 exports.minAgeRestrictionFieldValidator = minAgeRestrictionFieldValidator;
 const publicationDateFieldValidator = (publicationDate, errorsArray) => {
-    if (!publicationDate) {
-        errorsArray.push({ field: 'publicationDate', message: 'no info on publicationDate' });
+    if (publicationDate === null || publicationDate === undefined) {
+        errorsArray.push({ message: 'no info on publicationDate', field: 'publicationDate' });
+        return;
     }
     if (typeof publicationDate !== 'string') {
         errorsArray.push({
-            field: 'publicationDate',
-            message: 'not a string'
+            message: 'not a string',
+            field: 'publicationDate'
         });
         return;
     }

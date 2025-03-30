@@ -1,71 +1,78 @@
 import {ResolutionsEnum} from '../videos/dto';
 
+
 export const titleFieldValidator = (
-    title: string | undefined,
-    errorsArray: Array<{field: string; message: string}>
+    title: string,
+    errorsArray: Array<{message: string; field: string;}>
 )=> {
-    if (!title) {
-        errorsArray.push({field: 'title', message: 'no title'})
+    if (title === null || title === undefined) {
+        errorsArray.push({message: 'no title', field: 'title'})
+        return;
     }
     if (typeof title !== 'string') {
         errorsArray.push({
-            field: 'title',
-            message: 'not a string'
+            message: 'not a string',
+            field: 'title'
         })
         return;
     }
     if (title && title.trim().length > 40) {
         errorsArray.push({
-            field: 'title',
-            message: 'more than 40 characters'
+            message: 'more than 40 characters',
+            field: 'title'
         })
+        return;
     }
     if (title && title.trim().length < 1) {
         errorsArray.push({
-            field: 'title',
-            message: 'no title'
+            message: 'no title',
+            field: 'title'
         })
+        return;
     }
 }
 
 export const authorFieldValidator = (
     author: string | undefined,
-    errorsArray: Array<{field: string; message: string}>
+    errorsArray: Array<{message: string; field: string;}>
 )=> {
-    if (!author) {
-        errorsArray.push({field: 'author', message: 'no author'})
+    if (author === null || author === undefined) {
+        errorsArray.push({message: 'no author', field: 'author'})
+        return;
     }
     if (typeof author !== 'string') {
         errorsArray.push({
-            field: 'author',
-            message: 'not a string'
+            message: 'not a string',
+            field: 'author'
         })
         return;
     }
     if (author && author.trim().length > 20) {
         errorsArray.push({
-            field: 'author',
-            message: 'more than 20 characters'
+            message: 'more than 20 characters',
+            field: 'author'
         })
+        return;
     }
     if (author && author.trim().length < 1) {
         errorsArray.push({
-            field: 'author',
-            message: 'no author'
+            message: 'no author',
+            field: 'author'
         })
+        return;
     }
 }
 
 export const availableResolutionsFieldValidator = (
     availableResolutions: Array<string>,
-    errorsArray: Array<{field: string; message: string}>
+    errorsArray: Array<{message: string; field: string;}>
 )=> {
     if (availableResolutions && availableResolutions.length) {
         availableResolutions.forEach((resolution: string) => {
             if (!Object.keys(ResolutionsEnum).includes(resolution)) {
                 errorsArray.push({
-                    field: 'availableResolutions',
-                    message: 'exist no valid value'
+                    message: 'exist no valid value',
+                    field: 'availableResolutions'
                 })
                 return
             }
@@ -75,15 +82,16 @@ export const availableResolutionsFieldValidator = (
 
 export const canBeDownloadedFieldValidator = (
     canBeDownloaded: boolean | undefined,
-    errorsArray: Array<{field: string; message: string}>
+    errorsArray: Array<{message: string; field: string;}>
 )=> {
-    if (!canBeDownloaded) {
-        errorsArray.push({field: 'canBeDownloaded', message: 'no info on canBeDownloaded'})
+    if (canBeDownloaded === null || canBeDownloaded === undefined) {
+        errorsArray.push({message: 'no info on canBeDownloaded', field: 'canBeDownloaded'})
+        return;
     }
     if (typeof canBeDownloaded !== 'boolean') {
         errorsArray.push({
-            field: 'canBeDownloaded',
-            message: 'not a boolean'
+            message: 'not a boolean',
+            field: 'canBeDownloaded'
         })
         return;
     }
@@ -91,47 +99,51 @@ export const canBeDownloadedFieldValidator = (
 
 export const minAgeRestrictionFieldValidator = (
     minAgeRestriction: number | undefined | null,
-    errorsArray: Array<{field: string; message: string}>
+    errorsArray: Array<{message: string; field: string;}>
 )=> {
-    if (!minAgeRestriction) {
-        errorsArray.push({field: 'minAgeRestriction', message: 'no minAgeRestriction'})
+    if (minAgeRestriction === null || minAgeRestriction === undefined) {
+        errorsArray.push({message: 'no minAgeRestriction', field: 'minAgeRestriction'})
+        return;
     }
     if (minAgeRestriction === null) {
         return;
     }
     if (typeof minAgeRestriction !== 'number') {
         errorsArray.push({
-            field: 'minAgeRestriction',
-            message: 'not a number'
+            message: 'not a number',
+            field: 'minAgeRestriction'
         })
         return;
     }
     if (minAgeRestriction && minAgeRestriction > 18) {
         errorsArray.push({
-            field: 'minAgeRestriction',
-            message: 'max age is 18, enter number from 1 to 18'
+            message: 'max age is 18, enter number from 1 to 18',
+            field: 'minAgeRestriction'
         })
+        return;
     }
     if (minAgeRestriction && minAgeRestriction < 1) {
         errorsArray.push({
-            field: 'minAgeRestriction',
-            message: 'enter a valid number from 1 to 18'
+            message: 'enter a valid number from 1 to 18',
+            field: 'minAgeRestriction'
         })
+        return;
     }
 }
 
 
 export const publicationDateFieldValidator = (
     publicationDate: string | undefined,
-    errorsArray: Array<{field: string; message: string}>
+    errorsArray: Array<{message: string; field: string;}>
 )=> {
-    if (!publicationDate) {
-        errorsArray.push({field: 'publicationDate', message: 'no info on publicationDate'})
+    if (publicationDate === null || publicationDate === undefined) {
+        errorsArray.push({message: 'no info on publicationDate', field: 'publicationDate'})
+        return;
     }
     if (typeof publicationDate !== 'string') {
         errorsArray.push({
-            field: 'publicationDate',
-            message: 'not a string'
+            message: 'not a string',
+            field: 'publicationDate'
         })
         return;
     }

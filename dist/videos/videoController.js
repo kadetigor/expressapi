@@ -41,7 +41,10 @@ exports.videoController = {
         (0, field_validation_1.authorFieldValidator)(author, errorsArray);
         (0, field_validation_1.availableResolutionsFieldValidator)(availableResolutions, errorsArray);
         if (errorsArray.length > 0) {
-            res.status(400).send(errorsArray);
+            const result = {
+                errorsMessages: errorsArray
+            };
+            res.status(400).send(result);
             return;
         }
         const video = {
@@ -72,7 +75,10 @@ exports.videoController = {
         (0, field_validation_1.minAgeRestrictionFieldValidator)(minAgeRestriction, errorsArray);
         (0, field_validation_1.publicationDateFieldValidator)(publicationDate, errorsArray);
         if (errorsArray.length > 0) {
-            res.status(400).send(errorsArray);
+            const result = {
+                errorsMessages: errorsArray
+            };
+            res.status(400).send(result);
             return;
         }
         video.title = title;

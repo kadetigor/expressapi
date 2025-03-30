@@ -49,7 +49,10 @@ export const videoController = {
                 availableResolutionsFieldValidator(availableResolutions, errorsArray)
 
                 if (errorsArray.length > 0) {
-                    res.status(400).send(errorsArray);
+                    const result = {
+                        errorsMessages: errorsArray
+                    };
+                    res.status(400).send(result);
                     return;
                 }
                 const video = {
@@ -83,10 +86,13 @@ export const videoController = {
                 minAgeRestrictionFieldValidator(minAgeRestriction, errorsArray);
                 publicationDateFieldValidator(publicationDate, errorsArray);
 
-                if (errorsArray.length > 0) {
-                    res.status(400).send(errorsArray);
-                    return;
-                }
+                    if (errorsArray.length > 0) {
+                        const result = {
+                            errorsMessages: errorsArray
+                        };
+                        res.status(400).send(result);
+                        return;
+                    }
 
                 video.title = title;
                 video.author = author;
