@@ -5,13 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
-const settings_1 = require("./settings");
 const videoController_1 = require("./videos/videoController");
 // import cors from 'cors';
 exports.app = (0, express_1.default)();
 exports.app.use(express_1.default.json());
 // app.use(cors()) this line allows any front-end to request from our back-end. To specify we would need to give it specific URLs that can request from our back-edn
-exports.app.use(settings_1.SETTINGS.PATH.VIDEOS, videoController_1.videoRouter);
+exports.app.use(videoController_1.videoRouter);
+// app.get('/', (req: Request, res: Response) => {
+//     res.status(200).send('API is running!');
+// });
 // const products = [
 //     {
 //         id: 1,

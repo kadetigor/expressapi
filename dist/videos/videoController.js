@@ -6,7 +6,8 @@ const express_1 = require("express");
 const db_1 = require("../db/db");
 // import {createVideo} from './createVideo';
 const field_validation_1 = require("../validation/field-validation");
-const settings_1 = require("../settings");
+// import {errorResponse} from "../validation/errorResponse";
+// import {SETTINGS} from "../settings";
 exports.videoRouter = (0, express_1.Router)();
 exports.videoController = {
     getVideos: (req, res) => {
@@ -92,9 +93,9 @@ exports.videoController = {
         res.send(204);
     },
 };
-exports.videoRouter.get(settings_1.SETTINGS.PATH.VIDEOS, exports.videoController.getVideos);
-exports.videoRouter.get(`${settings_1.SETTINGS.PATH.VIDEOS}/:id`, exports.videoController.getVideoById);
-exports.videoRouter.post(settings_1.SETTINGS.PATH.VIDEOS, exports.videoController.createVideo);
-exports.videoRouter.put(`${settings_1.SETTINGS.PATH.VIDEOS}/:id`, exports.videoController.updateVideoById);
-exports.videoRouter.delete(`${settings_1.SETTINGS.PATH.VIDEOS}/:id`, exports.videoController.deleteVideoById);
-exports.videoRouter.delete(`${settings_1.SETTINGS.PATH.VIDEOS}/all-data`, exports.videoController.deleteAllVideos);
+exports.videoRouter.get('/', exports.videoController.getVideos);
+exports.videoRouter.get('/:id', exports.videoController.getVideoById);
+exports.videoRouter.post('/', exports.videoController.createVideo);
+exports.videoRouter.put('/:id', exports.videoController.updateVideoById);
+exports.videoRouter.delete('/:id', exports.videoController.deleteVideoById);
+exports.videoRouter.delete('/all-data', exports.videoController.deleteAllVideos);
