@@ -9,5 +9,6 @@ var ResolutionsEnum;
     ResolutionsEnum["P480"] = "P480";
     ResolutionsEnum["P720"] = "P720";
     ResolutionsEnum["P1080"] = "P1080";
+    ResolutionsEnum["P1440"] = "P1440";
     ResolutionsEnum["P2160"] = "P2160";
 })(ResolutionsEnum || (exports.ResolutionsEnum = ResolutionsEnum = {}));
