@@ -15,104 +15,108 @@ import {
 export const videoRouter = Router()
 
 export const videoController = {
-    getVideos: (req: Request, res: Response)=> {
-        const videos = db.videos // get videos from database
-        res.status(200).send(videos)
-    },
-    getVideoById: (req: Request, res: Response) => {
-        const video = db.videos.find(v => v.id === +req.params.id)
-        if (video) {
-            res.send(video)
-        } else {
-            res.send(404)
+            getMainPage: (req: Request, res: Response) => {
+            res.status(200).send('API is running!');
+            },
+            getVideos: (req: Request, res: Response)=> {
+                const videos = db.videos // get videos from database
+                res.status(200).send(videos)
+            },
+                getVideoById: (req: Request, res: Response) => {
+                const video = db.videos.find(v => v.id === +req.params.id)
+                if (video) {
+                    res.send(video)
+                } else {
+                    res.send(404)
+                }
+            },
+                createVideo: (req: Request, res: Response) => {
+                const now = new Date();
+
+                const title = req.body.title
+                const author = req.body.author
+                const canBeDownloaded = req.body.canBeDownloaded ?? false
+                const minAgeRestriction = req.body.minAgeRestriction ?? null
+                const createdAt = now.toISOString();
+                const publicationDate = req.body.publicationDate
+                    ?? new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
+                const availableResolutions = req.body.availableResolutions
+
+                const errorsArray: Array<{field:string; message:string}> = []
+
+                titleFieldValidator(title, errorsArray)
+                authorFieldValidator(author, errorsArray)
+                availableResolutionsFieldValidator(availableResolutions, errorsArray)
+
+                if (errorsArray.length > 0) {
+                    res.status(400).send(errorsArray);
+                    return;
+                }
+                const video = {
+                    id: Date.now() + Math.random(),
+                    title: title,
+                    author: author,
+                    canBeDownloaded: canBeDownloaded,
+                    minAgeRestriction: minAgeRestriction,
+                    createdAt: createdAt,
+                    publicationDate: publicationDate,
+                    availableResolutions: availableResolutions,
+                }
+                db.videos = [...db.videos, video]
+                res.status(201).send(video)
+            },
+                updateVideoById: (req: Request, res: Response) => {
+                const video = db.videos.find(v => v.id === +req.params.id);
+                if (!video) {
+                    res.sendStatus(404);
+                    return;
+                }
+
+                const { title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate } = req.body;
+
+                const errorsArray: Array<{ field: string; message: string }> = [];
+
+                titleFieldValidator(title, errorsArray);
+                availableResolutionsFieldValidator(availableResolutions, errorsArray);
+                authorFieldValidator(author, errorsArray);
+                canBeDownloadedFieldValidator(canBeDownloaded, errorsArray);
+                minAgeRestrictionFieldValidator(minAgeRestriction, errorsArray);
+                publicationDateFieldValidator(publicationDate, errorsArray);
+
+                if (errorsArray.length > 0) {
+                    res.status(400).send(errorsArray);
+                    return;
+                }
+
+                video.title = title;
+                video.author = author;
+                video.canBeDownloaded = canBeDownloaded ?? false;
+                video.minAgeRestriction = minAgeRestriction ?? null;
+                video.publicationDate = publicationDate;
+                video.availableResolutions = availableResolutions;
+
+                res.status(204).send(video);
+            },
+
+                deleteVideoById: (req: Request, res: Response) => {
+                if (!db.videos.find(v => v.id === +req.params.id)) {
+                    res.sendStatus(404);
+                    return;
+                }
+                db.videos = db.videos.filter(v => v.id !== +req.params.id)
+                res.sendStatus(204)
+            },
+
+                deleteAllVideos: (req: Request, res: Response) => {
+                db.videos = []
+                res.send(204)
+            },
         }
-    },
-    createVideo: (req: Request, res: Response) => {
-        const now = new Date();
 
-        const title = req.body.title
-        const author = req.body.author
-        const canBeDownloaded = req.body.canBeDownloaded ?? false
-        const minAgeRestriction = req.body.minAgeRestriction ?? null
-        const createdAt = now.toISOString();
-        const publicationDate = req.body.publicationDate
-            ?? new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
-        const availableResolutions = req.body.availableResolutions
-
-        const errorsArray: Array<{field:string; message:string}> = []
-
-        titleFieldValidator(title, errorsArray)
-        authorFieldValidator(author, errorsArray)
-        availableResolutionsFieldValidator(availableResolutions, errorsArray)
-
-        if (errorsArray.length > 0) {
-            res.status(400).send(errorsArray);
-            return;
-        }
-        const video = {
-            id: Date.now() + Math.random(),
-            title: title,
-            author: author,
-            canBeDownloaded: canBeDownloaded,
-            minAgeRestriction: minAgeRestriction,
-            createdAt: createdAt,
-            publicationDate: publicationDate,
-            availableResolutions: availableResolutions,
-        }
-        db.videos = [...db.videos, video]
-        res.status(201).send(video)
-    },
-    updateVideoById: (req: Request, res: Response) => {
-        const video = db.videos.find(v => v.id === +req.params.id);
-        if (!video) {
-            res.sendStatus(404);
-            return;
-        }
-
-        const { title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate } = req.body;
-
-        const errorsArray: Array<{ field: string; message: string }> = [];
-
-        titleFieldValidator(title, errorsArray);
-        availableResolutionsFieldValidator(availableResolutions, errorsArray);
-        authorFieldValidator(author, errorsArray);
-        canBeDownloadedFieldValidator(canBeDownloaded, errorsArray);
-        minAgeRestrictionFieldValidator(minAgeRestriction, errorsArray);
-        publicationDateFieldValidator(publicationDate, errorsArray);
-
-        if (errorsArray.length > 0) {
-            res.status(400).send(errorsArray);
-            return;
-        }
-
-        video.title = title;
-        video.author = author;
-        video.canBeDownloaded = canBeDownloaded ?? false;
-        video.minAgeRestriction = minAgeRestriction ?? null;
-        video.publicationDate = publicationDate;
-        video.availableResolutions = availableResolutions;
-
-        res.status(204).send(video);
-    },
-
-    deleteVideoById: (req: Request, res: Response) => {
-        if (!db.videos.find(v => v.id === +req.params.id)) {
-            res.sendStatus(404);
-            return;
-        }
-        db.videos = db.videos.filter(v => v.id !== +req.params.id)
-        res.sendStatus(204)
-    },
-
-    deleteAllVideos: (req: Request, res: Response) => {
-        db.videos = []
-        res.send(204)
-    },
-}
-
-videoRouter.get('/', videoController.getVideos)
-videoRouter.get('/:id', videoController.getVideoById)
-videoRouter.post('/', videoController.createVideo)
-videoRouter.put('/:id', videoController.updateVideoById)
-videoRouter.delete('/:id', videoController.deleteVideoById)
-videoRouter.delete('/all-data', videoController.deleteAllVideos)
+videoRouter.get('/', videoController.getMainPage)
+videoRouter.get('/videos', videoController.getVideos)
+videoRouter.get('/videos/:id', videoController.getVideoById)
+videoRouter.post('/videos', videoController.createVideo)
+videoRouter.put('/videos/:id', videoController.updateVideoById)
+videoRouter.delete('/videos/:id', videoController.deleteVideoById)
+videoRouter.delete('/testing/all-data', videoController.deleteAllVideos)

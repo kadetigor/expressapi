@@ -10,6 +10,9 @@ const field_validation_1 = require("../validation/field-validation");
 // import {SETTINGS} from "../settings";
 exports.videoRouter = (0, express_1.Router)();
 exports.videoController = {
+    getMainPage: (req, res) => {
+        res.status(200).send('API is running!');
+    },
     getVideos: (req, res) => {
         const videos = db_1.db.videos; // get videos from database
         res.status(200).send(videos);
@@ -93,9 +96,10 @@ exports.videoController = {
         res.send(204);
     },
 };
-exports.videoRouter.get('/', exports.videoController.getVideos);
-exports.videoRouter.get('/:id', exports.videoController.getVideoById);
-exports.videoRouter.post('/', exports.videoController.createVideo);
-exports.videoRouter.put('/:id', exports.videoController.updateVideoById);
-exports.videoRouter.delete('/:id', exports.videoController.deleteVideoById);
-exports.videoRouter.delete('/all-data', exports.videoController.deleteAllVideos);
+exports.videoRouter.get('/', exports.videoController.getMainPage);
+exports.videoRouter.get('/videos', exports.videoController.getVideos);
+exports.videoRouter.get('/videos/:id', exports.videoController.getVideoById);
+exports.videoRouter.post('/videos', exports.videoController.createVideo);
+exports.videoRouter.put('/videos/:id', exports.videoController.updateVideoById);
+exports.videoRouter.delete('/videos/:id', exports.videoController.deleteVideoById);
+exports.videoRouter.delete('/testing/all-data', exports.videoController.deleteAllVideos);
